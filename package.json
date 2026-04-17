@@ -1,9 +1,12 @@
 {
   "name": "inspector-root",
   "private": true,
+  "workspaces": [
+    "chairman-web"
+  ],
   "scripts": {
-    "build": "npm run build --prefix chairman-web",
-    "start": "npm run preview --prefix chairman-web",
-    "dev": "npm run dev --prefix chairman-web"
+    "build": "npm run build -w chairman-web",
+    "start": "npm run preview -w chairman-web",
+    "dev": "npm run dev -w chairman-web"
   }
 }

@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# Navigate to the web app directory
-cd chairman-web
+# This script is used by Railpack/Railway to build and start the application.
+# It runs from the root directory.
 
-# Install dependencies if node_modules don't exist
-if [ ! -d "node_modules" ]; then
-  npm install
-fi
+# Install dependencies for all workspaces
+npm install
 
-# Build and start the app
-npm run build
-npm run preview -- --host 0.0.0.0 --port ${PORT:-3000}
+# Build the chairman-web project
+npm run build -w chairman-web
+
+# Start the preview server
+# Railpack/Railway typically provides a PORT environment variable.
+npm run preview -w chairman-web -- --host 0.0.0.0 --port ${PORT:-3000}

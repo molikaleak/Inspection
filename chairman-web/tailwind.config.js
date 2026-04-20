@@ -14,23 +14,23 @@ export default {
         'primary-dim': 'var(--color-primary-dim)',
         'on-surface': 'var(--color-on-surface)',
         'on-surface-variant': 'var(--color-on-surface-variant)',
-        'emerald-accent': 'var(--color-emerald-accent)',
         'review-amber': 'var(--color-review-amber)',
         'viewed-cyan': 'var(--color-viewed-cyan)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
       },
       boxShadow: {
-        'ambient': 'var(--shadow-ambient)',
-        'glow': '0px 0px 20px rgba(16, 185, 129, 0.15)',
+        'ambient': '0 1px 3px rgba(0, 0, 0, 0.04)',
+        'card': '0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02)',
+        'elevated': '0 8px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04)',
       },
       borderRadius: {
-        'xl': '1rem',
-        '2xl': '1.5rem',
+        'xl': '0.75rem',
+        '2xl': '1rem',
+        '3xl': '1.25rem',
       }
     },
   },
   plugins: [],
 }
-

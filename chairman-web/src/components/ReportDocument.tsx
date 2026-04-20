@@ -19,91 +19,88 @@ export default function ReportDocument({ report }: ReportDocumentProps) {
   const allPhotos = mockForemen.flatMap(f => f.photos || []);
 
   return (
-    <div className="bg-white p-[20mm] min-h-[297mm] relative print:break-after-page">
+    <div className="bg-white p-4 md:p-[20mm] min-h-[297mm] relative print:break-after-page print:p-[20mm]">
       {/* Document Header */}
-      <header className="flex justify-between items-start border-b-2 border-slate-900 pb-8">
+      <header className="flex flex-col md:flex-row justify-between md:items-start gap-4 border-b border-black/[0.06] pb-6 md:pb-8 print:flex-row print:pb-8">
         <div>
-          <div className="flex items-center gap-2 text-primary mb-4">
-             <ShieldCheck size={32} strokeWidth={2.5} />
-             <span className="font-black text-2xl tracking-tighter text-slate-900 uppercase">Chairman <span className="text-primary italic">Protocol</span></span>
+          <div className="flex items-center gap-2 text-primary mb-2 md:mb-3 print:mb-3">
+             <ShieldCheck size={28} strokeWidth={2} />
+             <span className="font-semibold text-xl md:text-2xl print:text-2xl tracking-tight text-black">Inspector</span>
           </div>
-          <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase leading-none">Inspection Intelligence Dossier</h2>
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
+          <h2 className="text-[24px] md:text-[32px] print:text-[32px] font-semibold text-black tracking-tight leading-none text-balance">Inspection Report</h2>
+          <div className="mt-4 md:mt-6 print:mt-6 flex flex-wrap gap-x-6 md:gap-x-8 gap-y-3">
              <DocMetaItem icon={<FileText size={14}/>} label="Report ID" value={report.id} />
-             <DocMetaItem icon={<Calendar size={14}/>} label="Date Generated" value={new Date().toLocaleDateString()} />
-             <DocMetaItem icon={<MapPin size={14}/>} label="Node Location" value={report.project} />
+             <DocMetaItem icon={<Calendar size={14}/>} label="Date" value={report.date} />
+             <DocMetaItem icon={<MapPin size={14}/>} label="Location" value={report.project} />
           </div>
         </div>
-        <div className="text-right">
-           <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Security Rating</div>
-           <div className="px-6 py-2 rounded-xl bg-slate-900 text-white font-black text-2xl tracking-tighter">RESTRICTED</div>
+        <div className="md:text-right print:text-right flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start">
+           <div className="text-[11px] text-black/50 md:mb-1 print:mb-1">Status</div>
+           <div className="px-3 md:px-4 py-1.5 rounded-lg bg-surface-low text-black font-medium text-[12px] md:text-[13px] print:text-[13px]">Validated</div>
         </div>
       </header>
 
-      {/* Executive Summary Section */}
-      <section className="mt-12">
-        <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-[0.4em] mb-6 border-l-4 border-primary pl-4">I. Executive Intelligence</h3>
-        <div className="grid grid-cols-12 gap-8">
-          <div className="col-span-8 flex flex-col justify-between">
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              This comprehensive tactical assessment was conducted on <span className="font-bold text-slate-900">{report.date}</span> at the <span className="font-bold text-slate-900">{report.project}</span> site. The objective was to validate operational compliance, team supervision efficacy, and safety protocol adherence during the <span className="font-bold text-slate-900">{report.subject}</span> window.
+      {/* Executive Summary */}
+      <section className="mt-6 md:mt-10 print:mt-10">
+        <h3 className="text-[14px] md:text-[15px] font-medium text-black mb-3 md:mb-5 print:mb-5">Summary</h3>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 print:grid-cols-12 print:gap-8">
+          <div className="md:col-span-8 print:col-span-8 flex flex-col justify-between">
+            <p className="text-[13px] text-black/70 leading-relaxed">
+              This inspection was conducted on <span className="text-black font-medium">{report.date}</span> at the <span className="text-black font-medium">{report.project}</span> site. The objective was to validate operational compliance, supervise teams, and review safety protocols during the <span className="text-black font-medium">{report.subject}</span> window.
             </p>
-            <div className="flex items-center gap-6 mt-8">
+            <div className="flex items-center gap-4 md:gap-6 print:gap-6 mt-5 md:mt-6 print:mt-6">
                <div className="flex items-center gap-3">
-                  <img src={mockInspectorsData[report.inspector]?.avatar} className="w-10 h-10 rounded-full border-2 border-slate-200" alt="" />
+                  <img src={mockInspectorsData[report.inspector]?.avatar} className="w-8 h-8 md:w-10 md:h-10 print:w-10 print:h-10 rounded-full border border-black/10" alt="" />
                   <div>
-                     <div className="text-xs font-black text-slate-900">{report.inspector}</div>
-                     <div className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">{mockInspectorsData[report.inspector]?.title}</div>
+                     <div className="text-[12px] md:text-[13px] print:text-[13px] font-medium text-black">{report.inspector}</div>
+                     <div className="text-[11px] text-black/50">{mockInspectorsData[report.inspector]?.title}</div>
                   </div>
                </div>
-               <div className="w-px h-10 bg-slate-100" />
+               <div className="w-px h-8 bg-black/10" />
                <div>
-                  <div className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Digital Signature Hash</div>
-                  <div className="text-[8px] font-mono text-slate-300">#AF92-K55L-92BZ-0021-X99</div>
+                  <div className="text-[10px] md:text-[11px] print:text-[11px] text-black/50">Signature Hash</div>
+                  <div className="text-[10px] md:text-[11px] print:text-[11px] font-mono text-black/40 mt-0.5">#AF92-K55L</div>
                </div>
             </div>
           </div>
-          <div className="col-span-4 bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col items-center justify-center text-center">
-            <div className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">Audit Coefficient</div>
-            <div className="text-6xl font-black text-slate-900 tracking-tighter italic">{report.score}<span className="text-base font-bold text-primary opacity-60">%</span></div>
-            <div className="mt-4 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[9px] font-black uppercase tracking-widest border border-primary/20">
-               Stable Output
-            </div>
+          <div className="md:col-span-4 print:col-span-4 bg-surface-lowest rounded-xl p-4 md:p-5 print:p-5 border border-black/[0.04] flex flex-col items-center justify-center text-center">
+            <div className="text-[11px] md:text-[12px] text-black/50 mb-1">Score</div>
+            <div className="text-[36px] md:text-[48px] print:text-[48px] font-semibold text-black tracking-tight leading-none">{report.score}<span className="text-[16px] md:text-[20px] print:text-[20px] font-medium text-black/40">%</span></div>
           </div>
         </div>
       </section>
 
-      {/* Summary Statistics */}
-      <section className="mt-12 grid grid-cols-4 gap-4">
-         <StatBox label="Active Personnel" value={`${mockForemen.reduce((acc, f) => acc + (f.manpower || 0), 0)}`} sub="Total Workforce" />
-         <StatBox label="Deployment Time" value="8.0" sub="Hours Logged" />
-         <StatBox label="Key Findings" value={`${allFindings.length}`} sub="Protocol Insights" />
-         <StatBox label="Visual evidence" value={`${allPhotos.length}`} sub="High-Res captures" />
+      {/* Stats */}
+      <section className="mt-8 md:mt-10 print:mt-10 grid grid-cols-2 md:grid-cols-4 print:grid-cols-4 gap-3 md:gap-4 print:gap-4">
+         <StatBox label="Personnel" value={`${mockForemen.reduce((acc, f) => acc + (f.manpower || 0), 0)}`} sub="Total" />
+         <StatBox label="Duration" value="8.0" sub="Hours" />
+         <StatBox label="Findings" value={`${allFindings.length}`} sub="Noted" />
+         <StatBox label="Photos" value={`${allPhotos.length}`} sub="Attached" />
       </section>
 
       {/* Checklist Audit */}
-      <section className="mt-16">
-        <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-[0.4em] mb-8 border-l-4 border-primary pl-4">II. Audit Performance Metrics</h3>
+      <section className="mt-12">
+        <h3 className="text-[15px] font-medium text-black mb-5">Audit Details</h3>
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200">
-              <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Ref. ID</th>
-              <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Protocol Description</th>
-              <th className="py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Verification</th>
+            <tr className="border-b border-black/[0.06]">
+              <th className="py-2 text-[12px] font-medium text-black/50">ID</th>
+              <th className="py-2 text-[12px] font-medium text-black/50">Item</th>
+              <th className="py-2 text-[12px] font-medium text-black/50 text-right">Status</th>
             </tr>
           </thead>
           <tbody>
             {mockChecklist.map((section) => (
               <>
-                <tr key={section.section} className="bg-slate-50/50">
-                  <td colSpan={3} className="py-2 px-4 text-[9px] font-black text-slate-900 uppercase tracking-[0.2em]">{section.section}</td>
+                <tr key={section.section}>
+                  <td colSpan={3} className="pt-6 pb-2 text-[13px] font-medium text-black">{section.section}</td>
                 </tr>
-                {section.items.slice(0, 5).map((item) => ( // Truncated for print-all to save space/demo
-                  <tr key={item.id} className="border-b border-slate-100">
-                    <td className="py-4 font-mono text-[10px] text-slate-400">{item.id}</td>
-                    <td className="py-4 text-[11px] font-bold text-slate-700 pr-12">{item.desc}</td>
-                    <td className="py-4 text-right">
-                      <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${item.status === 'Yes' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                {section.items.slice(0, 5).map((item) => (
+                  <tr key={item.id} className="border-b border-black/[0.04]">
+                    <td className="py-3 font-mono text-[11px] text-black/40 w-16">{item.id}</td>
+                    <td className="py-3 text-[12px] text-black/80 pr-6">{item.desc}</td>
+                    <td className="py-3 text-right">
+                      <span className={`px-2 py-1 rounded-md text-[11px] font-medium ${item.status === 'Yes' ? 'bg-primary/10 text-primary' : 'bg-orange-50 text-orange-600'}`}>
                         {item.status}
                       </span>
                     </td>
@@ -115,10 +112,10 @@ export default function ReportDocument({ report }: ReportDocumentProps) {
         </table>
       </section>
 
-      {/* Simplified Footer for batch print */}
-      <footer className="mt-20 pt-8 border-t border-slate-100 flex justify-between items-center text-[8px] font-black text-slate-300 uppercase tracking-[0.5em]">
-         <span>Chairman Protocol Dossier #{report.id}</span>
-         <span>Page Output {new Date().toLocaleDateString()}</span>
+      {/* Footer */}
+      <footer className="mt-16 pt-6 border-t border-black/[0.06] flex justify-between items-center text-[10px] text-black/40">
+         <span>Report #{report.id}</span>
+         <span>Generated {new Date().toLocaleDateString()}</span>
       </footer>
     </div>
   );
@@ -126,11 +123,11 @@ export default function ReportDocument({ report }: ReportDocumentProps) {
 
 function DocMetaItem({ icon, label, value }: any) {
   return (
-     <div className="flex items-center gap-3">
-        <div className="text-primary">{icon}</div>
+     <div className="flex items-center gap-2.5">
+        <div className="text-black/40">{icon}</div>
         <div>
-           <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-0.5">{label}</div>
-           <div className="text-[10px] font-bold text-slate-900 leading-none">{value}</div>
+           <div className="text-[10px] text-black/50 mb-0.5">{label}</div>
+           <div className="text-[12px] font-medium text-black">{value}</div>
         </div>
      </div>
   );
@@ -138,10 +135,10 @@ function DocMetaItem({ icon, label, value }: any) {
 
 function StatBox({ label, value, sub }: any) {
    return (
-      <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm text-center">
-         <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{label}</div>
-         <div className="text-xl font-black text-slate-900 tracking-tighter mb-1 leading-none">{value}</div>
-         <div className="text-[7px] font-bold text-primary italic uppercase tracking-widest">{sub}</div>
+      <div className="p-4 rounded-xl border border-black/[0.06] text-center">
+         <div className="text-[11px] text-black/50 mb-1">{label}</div>
+         <div className="text-[24px] font-semibold text-black tracking-tight mb-0.5 leading-none">{value}</div>
+         <div className="text-[11px] text-black/40">{sub}</div>
       </div>
    );
 }

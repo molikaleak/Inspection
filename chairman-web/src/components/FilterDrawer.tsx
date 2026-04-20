@@ -36,59 +36,59 @@ export default function FilterDrawer({
     <div className="fixed inset-0 z-[100] flex justify-end">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       
       {/* Drawer Container */}
-      <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+      <div className="relative w-full max-w-md bg-surface h-full shadow-elevated border-l border-on-surface/[0.06] flex flex-col animate-in slide-in-from-right duration-300">
         
         {/* Header */}
-        <header className="px-8 py-6 flex items-center justify-between border-b border-gray-100">
-          <h2 className="text-2xl font-black text-gray-900 tracking-tighter">Operational Filters</h2>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-50 text-gray-400 transition-colors">
-            <X size={24} />
+        <header className="px-6 py-5 flex items-center justify-between border-b border-on-surface/[0.06]">
+          <h2 className="text-[20px] font-semibold text-on-surface tracking-tight">Filters</h2>
+          <button onClick={onClose} className="p-2 rounded-full hover:bg-surface-lowest text-on-surface-variant transition-colors">
+            <X size={20} />
           </button>
         </header>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto no-scrollbar">
-          <div className="p-8 space-y-10">
+          <div className="p-6 space-y-8">
             
-            {/* Search Section */}
-            <div className="space-y-3">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">PDA Search</span>
+            {/* Search */}
+            <div className="space-y-2">
+              <span className="text-[13px] text-on-surface-variant">Search</span>
               <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-black transition-colors" size={18} />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant/40 group-focus-within:text-primary transition-colors" size={16} />
                 <input 
                   type="text" 
-                  placeholder="Query intelligence..."
+                  placeholder="Search reports..."
                   value={filters.search}
                   onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 rounded-2xl text-sm font-bold border-2 border-transparent focus:border-gray-100 focus:bg-white focus:ring-0 outline-none transition-all placeholder:text-gray-300"
+                  className="w-full pl-10 pr-4 py-3 bg-surface-lowest rounded-xl text-[13px] border border-on-surface/[0.06] focus:border-primary/30 focus:bg-surface outline-none transition-all placeholder:text-on-surface-variant/40"
                 />
               </div>
             </div>
 
-            {/* Project Vector */}
+            {/* Project */}
             <FilterSection 
-              label="Project Vector" 
+              label="Project" 
               options={projects} 
               selectedValue={filters.project} 
               onSelect={(val) => handleSelect('project', val)} 
             />
 
-            {/* Audit Executive */}
+            {/* Inspector */}
             <FilterSection 
-              label="Audit Executive" 
+              label="Inspector" 
               options={inspectors} 
               selectedValue={filters.inspector} 
               onSelect={(val) => handleSelect('inspector', val)} 
             />
 
-            {/* Status Vector */}
+            {/* Status */}
             <FilterSection 
-              label="Status Vector" 
+              label="Status" 
               options={['All Statuses', 'Viewed', 'Needs Review']} 
               selectedValue={filters.status} 
               onSelect={(val) => handleSelect('status', val)} 
@@ -98,22 +98,21 @@ export default function FilterDrawer({
         </div>
 
         {/* Footer */}
-        <footer className="p-8 border-t border-gray-100 bg-gray-50/50 flex flex-col gap-4">
-          <div className="flex gap-4">
+        <footer className="p-6 border-t border-on-surface/[0.06] bg-surface-lowest/50 flex flex-col gap-3">
+          <div className="flex gap-3">
             <button 
               onClick={onClear}
-              className="flex-1 py-5 text-[10px] font-black uppercase tracking-widest text-gray-500 bg-white border border-gray-100 rounded-2xl hover:bg-gray-50 transition-all active:scale-95"
+              className="flex-1 py-3.5 text-[13px] text-on-surface-variant bg-surface border border-on-surface/[0.08] rounded-xl hover:bg-surface-lowest transition-all active:scale-95"
             >
-              Reset All
+              Reset
             </button>
             <button 
               onClick={onClose}
-              className="flex-[2] py-5 text-[10px] font-black uppercase tracking-widest text-white bg-black rounded-2xl hover:bg-black/90 transition-all shadow-xl shadow-black/10 active:scale-95"
+              className="flex-[2] py-3.5 text-[13px] font-medium text-white bg-primary rounded-xl hover:opacity-90 transition-all active:scale-95"
             >
-              Display {resultCount} Dossiers
+              Show {resultCount} results
             </button>
           </div>
-          <p className="text-center text-[9px] font-bold text-gray-300 uppercase tracking-widest">Chairman Protocol v1.4.2</p>
         </footer>
       </div>
     </div>
@@ -122,35 +121,32 @@ export default function FilterDrawer({
 
 function FilterSection({ label, options, selectedValue, onSelect }: { label: string, options: string[], selectedValue: string, onSelect: (val: string) => void }) {
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between border-b border-gray-50 pb-2">
-        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{label}</span>
-        <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">{options.length} Units</span>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <span className="text-[13px] text-on-surface-variant">{label}</span>
+        <span className="text-[12px] text-on-surface-variant/50">{options.length}</span>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2">
         {options.map((opt) => {
           const isSelected = selectedValue === opt;
           return (
             <button
               key={opt}
               onClick={() => onSelect(opt)}
-              className={`p-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border-2 text-left relative group ${
+              className={`p-3 rounded-xl text-[12px] transition-all border text-left ${
                 isSelected 
-                ? 'bg-black border-black text-white shadow-xl shadow-black/20 scale-[1.02] z-10' 
-                : 'bg-white border-gray-100 text-gray-400 hover:border-black/10 hover:text-black'
+                ? 'bg-primary border-primary text-white font-medium' 
+                : 'bg-surface border-on-surface/[0.06] text-on-surface-variant hover:border-primary/20 hover:text-on-surface'
               }`}
             >
-              <div className="flex flex-col gap-1 min-w-0">
+              <div className="flex flex-col gap-0.5 min-w-0">
                 <span className="truncate">{opt}</span>
                 {isSelected && (
-                  <div className="flex items-center gap-1 text-[8px] opacity-60">
-                    <Check size={8} strokeWidth={4} /> Selected
+                  <div className="flex items-center gap-0.5 text-[10px] opacity-80">
+                    <Check size={8} strokeWidth={3} /> Selected
                   </div>
                 )}
               </div>
-              {isSelected && (
-                <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              )}
             </button>
           );
         })}

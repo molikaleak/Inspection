@@ -1,5 +1,5 @@
 import { mockReports, mockProjects, mockInspectorsData } from '../data/mockData';
-import { ChevronRight, Filter, Calendar, FileText, Printer, X, Search } from 'lucide-react';
+import { ChevronRight, Filter, FileText, Printer, X, Search } from 'lucide-react';
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FilterDrawer from '../components/FilterDrawer';
@@ -61,122 +61,122 @@ export default function Archive() {
                             (filters.status !== 'All Statuses' ? 1 : 0);
 
   return (
-    <div className="flex-1 lg:pl-64 min-h-screen bg-surface">
-      <main className="max-w-6xl mx-auto p-5 md:p-10 space-y-12 pb-32 lg:pb-10">
+    <div className="flex-1 lg:pl-60 min-h-screen bg-surface">
+      <main className="max-w-6xl mx-auto p-5 md:p-8 space-y-6 pb-32 lg:pb-8">
         
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-on-surface/5">
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-5 pb-5 border-b border-on-surface/[0.06]">
           <div>
-            <h1 className="text-4xl font-black tracking-tighter text-on-surface leading-none">Intelligence Archive</h1>
-            <p className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mt-2 underline underline-offset-4 decoration-primary/20">Archived Field Dossiers</p>
+            <h1 className="text-[28px] font-semibold tracking-tight text-on-surface leading-none">Archive</h1>
+            <p className="text-[13px] text-primary font-medium mt-1">Archived field reports</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2.5">
             <button 
                onClick={() => setIsDrawerOpen(true)}
-               className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-surface-low border border-on-surface/5 text-[10px] font-black uppercase tracking-widest hover:bg-on-surface hover:text-surface transition-all group relative"
+               className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-low border border-on-surface/[0.06] text-[13px] text-on-surface-variant hover:text-on-surface transition-all relative"
             >
-               <Filter size={16} className="text-on-surface-variant group-hover:text-inherit" />
-               Filter Intelligence
+               <Filter size={15} />
+               Filters
                {activeFilterCount > 0 && (
-                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-surface rounded-full flex items-center justify-center text-[10px] font-bold shadow-lg shadow-primary/20">{activeFilterCount}</span>
+                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-primary text-white rounded-full flex items-center justify-center text-[10px] font-medium">{activeFilterCount}</span>
                )}
             </button>
             <Link 
               to="/reports/print-all"
-              className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-on-surface text-surface text-[10px] font-black uppercase tracking-widest hover:shadow-glow transition-all shrink-0"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-on-surface text-surface text-[13px] font-medium hover:opacity-90 transition-all shrink-0"
             >
-              <Printer size={16} /> Print All
+              <Printer size={15} /> Print All
             </Link>
           </div>
         </header>
 
-        {/* Applied Filter Chips (Inline) */}
+        {/* Applied Filter Chips */}
         {activeFilterCount > 0 && (
-          <div className="flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-2 duration-300 reveal-on-scroll">
+          <div className="flex flex-wrap gap-2 reveal-on-scroll">
              {filters.project !== 'All Projects' && <ActiveChip label={filters.project} onClear={() => setFilters({...filters, project: 'All Projects'})} />}
              {filters.inspector !== 'All Inspectors' && <ActiveChip label={filters.inspector} onClear={() => setFilters({...filters, inspector: 'All Inspectors'})} />}
              {filters.status !== 'All Statuses' && <ActiveChip label={filters.status} onClear={() => setFilters({...filters, status: 'All Statuses'})} />}
-             <button onClick={clearFilters} className="text-[10px] font-bold text-primary px-3 uppercase tracking-widest hover:underline transition-all">Clear All</button>
+             <button onClick={clearFilters} className="text-[13px] text-primary px-2 hover:underline transition-all">Clear all</button>
           </div>
         )}
 
-        {/* Global Reports Table/List (High-Density) */}
-        <section className="pb-20 overflow-hidden editorial-card reveal-on-scroll">
+        {/* Reports Table */}
+        <section className="apple-card overflow-hidden reveal-on-scroll">
            <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
-                  <thead className="bg-on-surface/[0.02] border-b border-on-surface/5">
+                  <thead className="bg-surface-low/50 border-b border-on-surface/[0.06]">
                      <tr>
-                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Intelligence ID</th>
-                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Operational Subject</th>
-                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Project Vector</th>
-                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Executive</th>
-                        <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-right">Action</th>
+                        <th className="px-5 py-3 text-[12px] font-medium text-on-surface-variant">ID</th>
+                        <th className="px-5 py-3 text-[12px] font-medium text-on-surface-variant">Subject</th>
+                        <th className="px-5 py-3 text-[12px] font-medium text-on-surface-variant">Project</th>
+                        <th className="px-5 py-3 text-[12px] font-medium text-on-surface-variant">Inspector</th>
+                        <th className="px-5 py-3 text-[12px] font-medium text-on-surface-variant text-right"></th>
                      </tr>
                   </thead>
-                  <tbody className="divide-y divide-on-surface/[0.03]">
+                  <tbody className="divide-y divide-on-surface/[0.04]">
                      {paginatedReports.map((report) => (
                        <tr 
                          key={report.id}
                          onClick={() => navigate(`/report/${report.id}`)}
-                         className="group hover:bg-on-surface/[0.01] transition-all cursor-pointer"
+                         className="group hover:bg-surface-lowest/50 transition-all cursor-pointer"
                        >
-                          <td className="px-6 py-6">
+                          <td className="px-5 py-4">
                              <div className="flex flex-col">
-                                <span className="text-xs font-black text-on-surface tracking-tighter">#{report.id}</span>
-                                <span className="text-[8px] font-bold text-on-surface-variant uppercase tracking-widest mt-1">{report.date}</span>
+                                <span className="text-[13px] font-medium text-on-surface">#{report.id}</span>
+                                <span className="text-[11px] text-on-surface-variant mt-0.5">{report.date}</span>
                              </div>
                           </td>
-                          <td className="px-6 py-6">
-                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-surface-low border border-on-surface/5 flex items-center justify-center text-primary">
-                                   <FileText size={16} />
+                          <td className="px-5 py-4">
+                             <div className="flex items-center gap-2.5">
+                                <div className="w-7 h-7 rounded-lg bg-surface-low flex items-center justify-center text-primary">
+                                   <FileText size={14} />
                                 </div>
-                                <span className="text-sm font-black text-on-surface tracking-tight">{report.subject}</span>
+                                <span className="text-[13px] font-medium text-on-surface">{report.subject}</span>
                              </div>
                           </td>
-                          <td className="px-6 py-6">
-                             <span className="text-[10px] font-black text-primary uppercase tracking-widest border-b border-primary/20 pb-0.5">{report.project}</span>
+                          <td className="px-5 py-4">
+                             <span className="text-[13px] text-primary font-medium">{report.project}</span>
                           </td>
-                          <td className="px-6 py-6">
+                          <td className="px-5 py-4">
                              <div className="flex items-center gap-2">
-                                <img src={mockInspectorsData[report.inspector]?.avatar} className="w-6 h-6 rounded-full border border-on-surface/10" alt="" />
-                                <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">{report.inspector}</span>
+                                <img src={mockInspectorsData[report.inspector]?.avatar} className="w-6 h-6 rounded-full" alt="" />
+                                <span className="text-[13px] text-on-surface-variant">{report.inspector}</span>
                              </div>
                           </td>
-                          <td className="px-6 py-6 text-right">
-                             <ChevronRight size={18} className="inline text-on-surface-variant/20 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                          <td className="px-5 py-4 text-right">
+                             <ChevronRight size={16} className="inline text-on-surface-variant/20 group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
                           </td>
                        </tr>
                      ))}
                   </tbody>
               </table>
               {filteredReports.length === 0 && (
-                <div className="py-20 text-center">
-                   <p className="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.4em]">No matching intelligence dossiers found</p>
+                <div className="py-16 text-center">
+                   <p className="text-[13px] text-on-surface-variant">No matching reports found</p>
                 </div>
               )}
            </div>
         </section>
 
-        {/* PDA Pagination */}
+        {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between pt-6 border-t border-on-surface/5">
-             <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between pt-4">
+             <div className="flex items-center gap-2">
                <button 
                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                  disabled={currentPage === 1}
-                 className="px-4 py-2 rounded-xl bg-surface-low border border-on-surface/5 text-[10px] font-black uppercase tracking-widest disabled:opacity-30 disabled:cursor-not-allowed hover:bg-on-surface hover:text-surface transition-all"
+                 className="px-3.5 py-2 rounded-lg bg-surface-low border border-on-surface/[0.06] text-[13px] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-on-surface hover:text-surface transition-all"
                >
-                 Prev
+                 Previous
                </button>
                <div className="flex items-center gap-1">
                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                    <button
                      key={page}
                      onClick={() => setCurrentPage(page)}
-                     className={`w-8 h-8 rounded-lg text-[10px] font-black transition-all ${
+                     className={`w-8 h-8 rounded-lg text-[13px] transition-all ${
                        currentPage === page 
-                         ? 'bg-primary text-surface shadow-lg shadow-primary/20' 
-                         : 'text-on-surface-variant hover:bg-on-surface/5'
+                         ? 'bg-primary text-white' 
+                         : 'text-on-surface-variant hover:bg-on-surface/[0.04]'
                      }`}
                    >
                      {page}
@@ -186,7 +186,7 @@ export default function Archive() {
                <button 
                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                  disabled={currentPage === totalPages}
-                 className="px-4 py-2 rounded-xl bg-surface-low border border-on-surface/5 text-[10px] font-black uppercase tracking-widest disabled:opacity-30 disabled:cursor-not-allowed hover:bg-on-surface hover:text-surface transition-all"
+                 className="px-3.5 py-2 rounded-lg bg-surface-low border border-on-surface/[0.06] text-[13px] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-on-surface hover:text-surface transition-all"
                >
                  Next
                </button>
@@ -211,7 +211,7 @@ export default function Archive() {
 
 function ActiveChip({ label, onClear }: any) {
   return (
-    <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 border border-primary/20 text-[10px] font-black text-primary uppercase tracking-widest">
+    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/[0.08] text-[13px] text-primary">
        {label}
        <button onClick={onClear} className="p-0.5 rounded-full hover:bg-primary/20"><X size={12} /></button>
     </div>

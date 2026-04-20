@@ -1,15 +1,23 @@
 import { useState, useMemo } from 'react';
 import { mockForemen, mockChecklist, mockReports, mockInspectorsData } from '../data/mockData';
-import { ChevronLeft, Printer, Share2, CheckCircle2, ChevronUp, ChevronDown } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { ChevronLeft, Printer, Share2, CheckCircle2, ChevronUp, ChevronDown, Monitor, FileSpreadsheet } from 'lucide-react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import ExportIntelligenceModal from '../components/ExportIntelligenceModal';
+import ExcelFormView from '../components/ExcelFormView';
 
 export default function Report() {
   const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
   const report = mockReports.find(r => r.id === id) || mockReports[0];
   const [selectedForeman, setSelectedForeman] = useState(mockForemen[0]);
   const [expandedSections, setExpandedSections] = useState<number[]>([0]);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  
+  // Read passed state from Tracker navigation, default to smart
+  const initialMode = location.state?.viewMode || 'smart';
+  const [viewMode, setViewMode] = useState<'smart' | 'excel'>(initialMode);
+
 
   // Calculate metrics for Export Summary
   const reportMetrics = useMemo(() => {
@@ -41,30 +49,51 @@ export default function Report() {
       <main className="max-w-3xl mx-auto p-5 md:p-8 space-y-8 pb-32 lg:pb-8">
         
         {/* Navigation & Actions */}
-        <div className="flex justify-between items-center">
-           <Link to="/" className="flex items-center gap-1.5 text-primary font-medium text-[13px] hover:opacity-70 transition-all">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+           <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-primary font-medium text-[13px] hover:opacity-70 transition-all">
               <ChevronLeft size={18} />
-              Overview
-           </Link>
-           <div className="flex gap-2">
-              <button 
-                onClick={() => setIsExportModalOpen(true)}
-                className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
-              >
-                <Printer size={16} />
-                <span className="text-[13px] hidden md:inline">Print</span>
-              </button>
-              <button 
-                onClick={() => setIsExportModalOpen(true)}
-                className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
-              >
-                <Share2 size={16} />
-                <span className="text-[13px] hidden md:inline">Export</span>
-              </button>
+              Back
+           </button>
+
+           <div className="flex items-center gap-4">
+               {/* View Toggle */}
+               <div className="flex gap-1 bg-surface-lowest p-1 rounded-xl border border-on-surface/[0.04] shrink-0">
+                  <button 
+                    onClick={() => setViewMode('smart')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all ${viewMode === 'smart' ? 'bg-surface shadow-sm text-on-surface border border-on-surface/[0.06]' : 'text-on-surface-variant hover:text-on-surface'}`}
+                  >
+                    <Monitor size={14} /> Smart
+                  </button>
+                  <button 
+                    onClick={() => setViewMode('excel')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all ${viewMode === 'excel' ? 'bg-surface shadow-sm text-on-surface border border-on-surface/[0.06]' : 'text-on-surface-variant hover:text-on-surface'}`}
+                  >
+                    <FileSpreadsheet size={14} /> Excel
+                  </button>
+               </div>
+
+               <div className="flex gap-2">
+                  <button 
+                    onClick={() => setIsExportModalOpen(true)}
+                    className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
+                  >
+                    <Printer size={16} />
+                    <span className="text-[13px] hidden md:inline">Print</span>
+                  </button>
+                  <button 
+                    onClick={() => setIsExportModalOpen(true)}
+                    className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
+                  >
+                    <Share2 size={16} />
+                    <span className="text-[13px] hidden md:inline">Export</span>
+                  </button>
+               </div>
            </div>
         </div>
 
-        {/* Header */}
+        {viewMode === 'smart' && (
+          <div className="space-y-8 animate-in fade-in duration-300">
+            {/* Header */}
         <header className="apple-card p-6 border-l-[3px] border-primary">
            <div className="flex items-start justify-between gap-6">
              <div className="flex-1">
@@ -209,21 +238,29 @@ export default function Report() {
             </p>
         </div>
 
-        {/* Site Photos */}
-        <div className="mb-4 border-b border-on-surface/[0.06] pb-3">
-           <p className="text-[12px] text-on-surface-variant mb-0.5">Evidence</p>
-           <h3 className="text-[17px] font-semibold tracking-tight text-on-surface">Site Photos: {selectedForeman.name}</h3>
+         {/* Site Photos */}
+         <div className="mb-4 border-b border-on-surface/[0.06] pb-3">
+            <p className="text-[12px] text-on-surface-variant mb-0.5">Evidence</p>
+            <h3 className="text-[17px] font-semibold tracking-tight text-on-surface">Site Photos: {selectedForeman.name}</h3>
+         </div>
+         {selectedForeman.photos && selectedForeman.photos.length > 0 ? (
+            <section className="grid grid-cols-2 md:grid-cols-4 gap-3 pb-8">
+                {selectedForeman.photos.map((photo, pIdx) => (
+                   <div key={pIdx} className="aspect-square rounded-xl overflow-hidden border border-on-surface/[0.06] bg-surface-lowest group cursor-pointer hover:shadow-card transition-all">
+                       <img src={photo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={`Site evidence by ${selectedForeman.name}`} />
+                   </div>
+                ))}
+            </section>
+         ) : (
+            <div className="pb-8 text-center text-[13px] text-on-surface-variant/50">No photos submitted by this foreman.</div>
+         )}
         </div>
-        {selectedForeman.photos && selectedForeman.photos.length > 0 ? (
-           <section className="grid grid-cols-2 md:grid-cols-4 gap-3 pb-8">
-               {selectedForeman.photos.map((photo, pIdx) => (
-                  <div key={pIdx} className="aspect-square rounded-xl overflow-hidden border border-on-surface/[0.06] bg-surface-lowest group cursor-pointer hover:shadow-card transition-all">
-                      <img src={photo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={`Site evidence by ${selectedForeman.name}`} />
-                  </div>
-               ))}
-           </section>
-        ) : (
-           <div className="pb-8 text-center text-[13px] text-on-surface-variant/50">No photos submitted by this foreman.</div>
+        )}
+
+        {viewMode === 'excel' && (
+           <div className="w-full overflow-x-auto animate-in fade-in duration-300 pb-16">
+              <ExcelFormView report={report} foreman={selectedForeman} checklist={mockChecklist} inspectorImage={mockInspectorsData[report.inspector]?.avatar} />
+           </div>
         )}
 
       </main>

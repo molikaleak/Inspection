@@ -199,12 +199,20 @@ export default function Appointments() {
            )}
 
            {viewMode === 'schedule' && (
-              <div className="space-y-6">
-                 {Object.entries(aptsByDate).map(([date, apts]) => (
-                    <div key={date} className="space-y-3">
-                       <h3 className="text-[14px] font-medium text-on-surface flex items-center gap-2.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                          {date}
+              <div className="space-y-5">
+                 {Object.entries(aptsByDate).map(([date, apts], idx) => {
+                    const colorPalette = [
+                      { bg: 'bg-[#007AFF]/[0.05]', border: 'border-[#007AFF]/30', text: 'text-[#007AFF]' },
+                      { bg: 'bg-[#34C759]/[0.05]', border: 'border-[#34C759]/30', text: 'text-[#34C759]' },
+                      { bg: 'bg-[#AF52DE]/[0.05]', border: 'border-[#AF52DE]/30', text: 'text-[#AF52DE]' },
+                      { bg: 'bg-[#FF9500]/[0.05]', border: 'border-[#FF9500]/30', text: 'text-[#FF9500]' },
+                      { bg: 'bg-[#FF2D55]/[0.05]', border: 'border-[#FF2D55]/30', text: 'text-[#FF2D55]' },
+                    ];
+                    const dColor = colorPalette[idx % colorPalette.length];
+                    return (
+                    <div key={date} className={`apple-card p-5 border ${dColor.border} ${dColor.bg}`}>
+                       <h3 className={`text-[14px] font-medium ${dColor.text} mb-4 pb-3 border-b border-on-surface/[0.08] flex items-center gap-2.5`}>
+                          <Calendar size={16} /> {date}
                        </h3>
                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                           {apts.map(apt => (
@@ -212,16 +220,28 @@ export default function Appointments() {
                           ))}
                        </div>
                     </div>
-                 ))}
+                 )})}
               </div>
            )}
 
            {viewMode === 'project' && (
               <div className="space-y-5">
-                 {Object.entries(aptsByProject).map(([proj, apts]) => (
-                    <div key={proj} className="apple-card p-5">
-                       <h3 className="text-[14px] font-medium text-on-surface mb-4 pb-3 border-b border-on-surface/[0.04] flex items-center gap-2.5">
-                          <Briefcase size={16} className="text-primary" /> {proj}
+                 {Object.entries(aptsByProject).map(([proj, apts]) => {
+                    const getProjectColor = (project: string) => {
+                      const colors: Record<string, { bg: string, border: string, text: string }> = {
+                        'J-Trust Inspection': { bg: 'bg-[#007AFF]/[0.05]', border: 'border-[#007AFF]/30', text: 'text-[#007AFF]' },
+                        'Riverside Plaza': { bg: 'bg-[#34C759]/[0.05]', border: 'border-[#34C759]/30', text: 'text-[#34C759]' },
+                        'Industrial Park Zone B': { bg: 'bg-[#FF9500]/[0.05]', border: 'border-[#FF9500]/30', text: 'text-[#FF9500]' },
+                        'Metro Bridge Phase 2': { bg: 'bg-[#AF52DE]/[0.05]', border: 'border-[#AF52DE]/30', text: 'text-[#AF52DE]' },
+                      };
+                      return colors[project] || { bg: 'bg-primary/[0.05]', border: 'border-primary/30', text: 'text-primary' };
+                    };
+                    const pColor = getProjectColor(proj);
+
+                    return (
+                    <div key={proj} className={`apple-card p-5 border ${pColor.border} ${pColor.bg}`}>
+                       <h3 className={`text-[14px] font-medium ${pColor.text} mb-4 pb-3 border-b border-on-surface/[0.08] flex items-center gap-2.5`}>
+                          <Briefcase size={16} /> {proj}
                        </h3>
                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                           {apts.map(apt => (
@@ -229,7 +249,7 @@ export default function Appointments() {
                           ))}
                        </div>
                     </div>
-                 ))}
+                 )})}
               </div>
            )}
         </section>

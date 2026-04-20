@@ -198,6 +198,17 @@ export default function Report() {
            })}
         </section>
 
+        {/* Summary Note */}
+        <div className="mb-4 mt-8 border-b border-on-surface/[0.06] pb-3">
+           <p className="text-[12px] text-on-surface-variant mb-0.5">Assessment</p>
+           <h3 className="text-[17px] font-semibold tracking-tight text-on-surface">Final Remarks</h3>
+        </div>
+        <div className="apple-card p-5 mb-8 border border-on-surface/[0.04]">
+            <p className="text-[13px] text-on-surface/80 leading-relaxed">
+               The operation proceeded efficiently with high compliance marks across all major zones. Minor infrastructural anomalies were noted by the foremen, which have been logged for the upcoming maintenance cycle. Safety protocols were rigorously maintained, and no critical violations or immediate hazards were observed. Team deployment remains optimal.
+            </p>
+        </div>
+
         {/* Site Photos */}
         <div className="mb-4 border-b border-on-surface/[0.06] pb-3">
            <p className="text-[12px] text-on-surface-variant mb-0.5">Evidence</p>

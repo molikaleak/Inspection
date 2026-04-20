@@ -74,14 +74,14 @@ export default function Report() {
 
                <div className="flex gap-2">
                   <button 
-                    onClick={() => setIsExportModalOpen(true)}
+                    onClick={() => navigate(`/export-excel/${report.id}?scope=single&foremanId=${selectedForeman.id}`)}
                     className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
                   >
                     <Printer size={16} />
                     <span className="text-[13px] hidden md:inline">Print</span>
                   </button>
                   <button 
-                    onClick={() => setIsExportModalOpen(true)}
+                    onClick={() => navigate(`/export-excel/${report.id}?scope=single&foremanId=${selectedForeman.id}`)}
                     className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
                   >
                     <Share2 size={16} />

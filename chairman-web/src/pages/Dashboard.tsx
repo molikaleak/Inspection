@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { mockForemen, mockChecklist, mockReports, mockInspectorsData } from '../data/mockData';
 import { Printer, Share2, CheckCircle2, ChevronUp, ChevronDown, ArrowLeft, ArrowRight, Activity, Search } from 'lucide-react';
 import ExportIntelligenceModal from '../components/ExportIntelligenceModal';
@@ -8,6 +8,7 @@ export default function Dashboard() {
   const [unreviewedReports, setUnreviewedReports] = useState([...mockReports]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDate, setFilterDate] = useState('All');
+  const navigate = useNavigate();
   
   const activeReports = useMemo(() => {
     return unreviewedReports.filter(r => {
@@ -160,14 +161,14 @@ export default function Dashboard() {
 
               <div className="flex gap-2">
                   <button 
-                    onClick={() => setIsExportModalOpen(true)}
+                    onClick={() => navigate(`/export-excel/${report.id}?scope=single&foremanId=${selectedForeman.id}`)}
                     className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
                   >
                     <Printer size={16} />
                     <span className="text-[13px] hidden md:inline">Print</span>
                   </button>
                   <button 
-                    onClick={() => setIsExportModalOpen(true)}
+                    onClick={() => navigate(`/export-excel/${report.id}?scope=single&foremanId=${selectedForeman.id}`)}
                     className="p-2.5 rounded-xl hover:bg-surface-lowest text-on-surface-variant transition-all flex items-center gap-1.5"
                   >
                     <Share2 size={16} />

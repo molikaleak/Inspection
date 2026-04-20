@@ -17,7 +17,7 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex fixed left-0 top-0 h-full w-60 bg-surface-low/60 backdrop-blur-xl border-r border-on-surface/[0.06] p-5 flex-col z-[58]">
+      <aside className="hidden lg:flex fixed left-0 top-0 h-full w-60 bg-surface-low/60 backdrop-blur-xl border-r border-on-surface/[0.06] p-5 flex-col z-[58] print:hidden">
         <div className="mb-8 px-3 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
@@ -57,7 +57,7 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] px-4 pb-5 pt-2 pointer-events-none">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] px-4 pb-5 pt-2 pointer-events-none print:hidden">
         {/* Theme toggle */}
         <div className="pointer-events-auto flex justify-end mb-3 pr-1">
           <button 

@@ -15,7 +15,7 @@ export function MobileHeader() {
   };
 
   return (
-    <header className="lg:hidden sticky top-0 left-0 right-0 z-[55] bg-surface/72 backdrop-blur-xl backdrop-saturate-[180%] border-b border-on-surface/[0.06] px-5 pt-12 pb-3 flex items-center justify-between">
+    <header className="lg:hidden sticky top-0 left-0 right-0 z-[55] bg-surface/72 backdrop-blur-xl backdrop-saturate-[180%] border-b border-on-surface/[0.06] px-5 pt-12 pb-3 flex items-center justify-between print:hidden">
       <div className="flex items-center gap-2.5">
         <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
           <ShieldCheck className="text-white" size={14} />

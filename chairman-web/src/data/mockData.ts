@@ -6,10 +6,10 @@ export const mockProjects = [
 ];
 
 export const mockInspectorsData: Record<string, { avatar: string, title: string }> = {
-  'Mr. Menghour': { avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop', title: 'Inspector' },
-  'Kimsour': { avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop', title: 'Inspector' },
-  'Dara': { avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop', title: 'Inspector' },
-  'Channary': { avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop', title: 'Inspector' }
+  'Mr. Menghour': { avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop', title: 'Inspector' },
+  'Kimsour': { avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop', title: 'Inspector' },
+  'Dara': { avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop', title: 'Inspector' },
+  'Channary': { avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop', title: 'Inspector' }
 };
 
 export const mockReports = [
@@ -62,7 +62,7 @@ export const mockForemen = [
     manpower: 10,
     duration: '8 hours',
     score: 12, 
-    avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&h=100&fit=crop',
     findings: [
       'Perfect PPE compliance observed during morning briefing',
       'Materials stored correctly after active hours',
@@ -80,13 +80,13 @@ export const mockForemen = [
     idNumber: '099883323',
     service: 'Logistics',
     workLocation: 'J-Trust Zone A',
-    date: '01-02-2026',
-    timeFrom: '8am',
-    timeTo: '5pm',
+    date: '03-02-2026',
+    timeFrom: '6pm',
+    timeTo: '2am',
     manpower: 8,
     duration: '8 hours',
     score: 11, 
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop',
     findings: [
       'Site cleanliness maintained at high standards',
       'Safety briefing documented with full attendance'
@@ -102,13 +102,13 @@ export const mockForemen = [
     idNumber: '099883324',
     service: 'Electrical',
     workLocation: 'J-Trust Zone C',
-    date: '01-02-2026',
-    timeFrom: '8am',
-    timeTo: '5pm',
+    date: '05-02-2026',
+    timeFrom: '10pm',
+    timeTo: '4am',
     manpower: 5,
-    duration: '8 hours',
+    duration: '6 hours',
     score: 12, 
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop',
     findings: [
       'Electrical cables safely secured off pathways',
       'Lockout/tagout procedures strictly followed'
@@ -126,13 +126,13 @@ export const mockForemen = [
     idNumber: '099883325',
     service: 'Plumbing',
     workLocation: 'J-Trust Zone B',
-    date: '01-02-2026',
-    timeFrom: '8am',
-    timeTo: '5pm',
+    date: '10-02-2026',
+    timeFrom: '4pm',
+    timeTo: '11pm',
     manpower: 6,
-    duration: '8 hours',
+    duration: '7 hours',
     score: 10, 
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&h=100&fit=crop',
     findings: [
       'Adequate lighting properly set up for detailed work',
       'Water tested and contained per safety guidelines'
@@ -148,13 +148,13 @@ export const mockForemen = [
     idNumber: '099883326',
     service: 'Heavy Equipment',
     workLocation: 'J-Trust Zone A',
-    date: '01-02-2026',
-    timeFrom: '8am',
-    timeTo: '5pm',
+    date: '14-02-2026',
+    timeFrom: '9pm',
+    timeTo: '5am',
     manpower: 12,
     duration: '8 hours',
     score: 11, 
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
+    avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop',
     findings: [
       'Trucks equipped with functioning lights and beepers',
       'Operator fatigue checks completed hourly'
@@ -175,12 +175,12 @@ export const mockChecklist = [
       { id: '1.2', desc: 'Did the Foreman check for sleepy and tired workers?', status: 'Yes' },
       { id: '1.3', desc: 'Is the team taking breaks on time?', status: 'Yes' },
       { id: '1.4', desc: 'Does everyone know their specific task?', status: 'Yes' },
-      { id: '1.5', desc: 'Are people working alone being monitored?', status: 'Yes' },
+      { id: '1.5', desc: 'Are people working alone being monitored?', status: 'No' },
       { id: '1.6', desc: 'Did the Foreman explain goals and risks?', status: 'Yes' },
       { id: '1.7', desc: 'Is the Foreman keeping the team calm?', status: 'Yes' },
       { id: '1.8', desc: 'Are the correct tools being used?', status: 'Yes' },
       { id: '1.9', desc: 'Are workers off their personal phones?', status: 'Yes' },
-      { id: '1.10', desc: 'Was Materials/Tools maintained during and after working time?', status: 'Yes' },
+      { id: '1.10', desc: 'Was Materials/Tools maintained during and after working time?', status: 'n/a' },
     ] 
   },
   { 
@@ -193,6 +193,15 @@ export const mockChecklist = [
       { id: '2.5', desc: 'Do trucks have lights and beepers?', status: 'Yes' },
       { id: '2.6', desc: 'Is the medical kit easy to find?', status: 'Yes' },
       { id: '2.7', desc: 'Are risky areas taped off with safety tape?', status: 'Yes' },
+      { id: '2.8', desc: 'Are all safety papers signed?', status: 'Yes' },
+      { id: '2.9', desc: 'Are exit ways clear and visible?', status: 'Yes' },
+      { id: '2.10', desc: 'Are workers visible to truck drivers?', status: 'Yes' },
+      { id: '2.11', desc: 'Is the site working area quiet for neighbors?', status: 'Yes' },
+      { id: '2.12', desc: 'Are trucks and people moving slowly?', status: 'Yes' },
+      { id: '2.13', desc: 'Is there a clean place to eat/drink?', status: 'Yes' },
+      { id: '2.14', desc: 'Are harnesses and nets being used?', status: 'Yes' },
+      { id: '2.15', desc: 'Are fire extinguishers ready for use?', status: 'Yes' },
+      { id: '2.16', desc: 'Is there enough air and a rescue plan?', status: 'Yes' },
     ]
   }
 ];

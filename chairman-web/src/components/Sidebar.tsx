@@ -1,4 +1,4 @@
-import { LayoutDashboard, Archive, BarChart3, LogOut, ShieldCheck, Calendar, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, Archive, BarChart3, LogOut, ShieldCheck, Calendar, Sun, Moon, FileSpreadsheet } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -8,6 +8,7 @@ export function Sidebar() {
 
   const navItems = [
     { to: '/', icon: <LayoutDashboard size={18} />, label: 'Overview' },
+    { to: '/reports', icon: <FileSpreadsheet size={18} />, label: 'Reports' },
     { to: '/insights', icon: <BarChart3 size={18} />, label: 'Insights' },
     { to: '/appointments', icon: <Calendar size={18} />, label: 'Schedule' },
     { to: '/archive', icon: <Archive size={18} />, label: 'Archive' },

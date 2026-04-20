@@ -10,6 +10,7 @@ import ReportsPrintAll from './pages/ReportsPrintAll';
 import Archive from './pages/Archive';
 import Config from './pages/Config';
 import Appointments from './pages/Appointments';
+import Tracker from './pages/Tracker';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { useLocation } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ function AppContent() {
       <div className="flex-1 flex flex-col min-h-screen">
         <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/reports" element={<Tracker />} />
         <Route path="/dashboard/print" element={<DashboardPrint />} />
         <Route path="/insights" element={<Insights />} />
         <Route path="/archive" element={<Archive />} />

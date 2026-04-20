@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { mockForemen, mockChecklist, mockReports, mockInspectorsData } from '../data/mockData';
 import { Printer, Share2, CheckCircle2, ChevronUp, ChevronDown, ArrowLeft, ArrowRight, Activity, Search } from 'lucide-react';
 import ExportIntelligenceModal from '../components/ExportIntelligenceModal';
@@ -31,7 +32,23 @@ export default function Dashboard() {
   const [selectedForeman, setSelectedForeman] = useState(mockForemen[0]);
   const [expandedSections, setExpandedSections] = useState<number[]>([0]);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'professional' | 'excel'>('excel');
+  const location = useLocation();
+  const [viewMode, setViewMode] = useState<'professional' | 'excel'>(location.state?.viewMode === 'excel' ? 'excel' : location.state?.viewMode === 'smart' ? 'professional' : 'excel');
+
+  useEffect(() => {
+    if (location.state?.reportId && activeReports.length > 0) {
+       const idx = activeReports.findIndex(r => r.id === location.state.reportId);
+       if (idx !== -1 && idx !== currentIndex) {
+          setCurrentIndex(idx);
+          setExpandedSections([0]);
+          // We need getForemenForInspector logic, which is defined right below this.
+          // Since getForemenForInspector is just a function, we can move it above useEffect or use it directly.
+       }
+       if (location.state?.viewMode) {
+          setViewMode(location.state.viewMode === 'smart' ? 'professional' : 'excel');
+       }
+    }
+  }, [location.state, activeReports]);
 
   const getForemenForInspector = (inspectorName: string) => {
     if (inspectorName === 'Mr. Menghour') return mockForemen.slice(0, 3);
@@ -51,6 +68,11 @@ export default function Dashboard() {
   };
 
   const availableInspectors = Array.from(new Set(activeReports.map(r => r.inspector)));
+
+  // Also set the correct foreman when the currentIndex changes through location.state
+  useEffect(() => {
+      setSelectedForeman(getForemenForInspector(activeReports[currentIndex]?.inspector || '')[0] || mockForemen[0]);
+  }, [currentIndex, activeReports]);
 
   const handleNext = () => {
     if (currentIndex < activeReports.length - 1) {

@@ -333,7 +333,7 @@ export default function Tracker() {
                  <div className="col-span-full text-center p-8 bg-white rounded-xl border border-gray-100 text-[13px] text-gray-500">No inspections match your search.</div>
                ) : (
                  filteredInspData.map((report) => (
-                   <div key={report.id} onClick={() => navigate(`/report/${report.id}`, { state: { viewMode: 'smart' } })} className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col hover:border-gray-300 hover:shadow-md transition-all cursor-pointer group">
+                   <div key={report.id} onClick={() => navigate(`/`, { state: { reportId: report.id, viewMode: 'smart' } })} className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col hover:border-gray-300 hover:shadow-md transition-all cursor-pointer group">
                       {/* Header */}
                       <div className="flex justify-between items-center pb-4 border-b border-gray-50 mb-4">
                          <div className="flex items-center gap-3">
@@ -417,7 +417,7 @@ export default function Tracker() {
                      </tr>
                   ) : (
                     filteredInspData.map((report) => (
-                    <tr key={report.id} onClick={() => navigate(`/report/${report.id}`, { state: { viewMode: 'excel' } })} className="hover:bg-gray-50 transition-colors cursor-pointer group">
+                    <tr key={report.id} onClick={() => navigate(`/`, { state: { reportId: report.id, viewMode: 'excel' } })} className="hover:bg-gray-50 transition-colors cursor-pointer group">
                       <td className="border border-gray-300 px-3 py-1.5 text-gray-900 font-medium bg-white uppercase text-center w-12 group-hover:bg-blue-50/30 transition-colors">{report.id}</td>
                       <td className="border border-gray-300 px-3 py-1.5 text-gray-800 bg-white whitespace-nowrap group-hover:bg-blue-50/30 transition-colors">{report.date}</td>
                       <td className="border border-gray-300 px-3 py-1.5 text-gray-800 bg-white whitespace-nowrap group-hover:bg-blue-50/30 transition-colors">{report.startTime} - {report.endTime}</td>

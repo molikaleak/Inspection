@@ -1,10 +1,30 @@
 import { useState, useMemo } from 'react';
 import { mockForemen, mockChecklist, mockReports, mockInspectorsData } from '../data/mockData';
-import { Printer, Share2, CheckCircle2, ChevronUp, ChevronDown, ArrowLeft, ArrowRight, Activity } from 'lucide-react';
+import { Printer, Share2, CheckCircle2, ChevronUp, ChevronDown, ArrowLeft, ArrowRight, Activity, Search } from 'lucide-react';
 import ExportIntelligenceModal from '../components/ExportIntelligenceModal';
 
 export default function Dashboard() {
-  const [activeReports, setActiveReports] = useState([...mockReports]);
+  const [unreviewedReports, setUnreviewedReports] = useState([...mockReports]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterDate, setFilterDate] = useState('All');
+  
+  const activeReports = useMemo(() => {
+    return unreviewedReports.filter(r => {
+      const matchSearch = r.subject.toLowerCase().includes(searchQuery.toLowerCase()) || r.project.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      let matchDate = true;
+      if (filterDate === 'Today') {
+          matchDate = r.date === '12-04-2026';
+      } else if (filterDate === 'This Week') {
+          matchDate = ['12-04-2026', '11-04-2026', '10-04-2026', '09-04-2026', '08-04-2026', '07-04-2026', '06-04-2026'].includes(r.date || '');
+      } else if (filterDate === 'This Month') {
+          matchDate = r.date?.includes('-04-2026') || false;
+      }
+      
+      return matchSearch && matchDate;
+    });
+  }, [unreviewedReports, searchQuery, filterDate]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const report = activeReports[currentIndex];
   
@@ -31,27 +51,15 @@ export default function Dashboard() {
   };
 
   const handleFinishReview = () => {
-      const newActive = activeReports.filter((_, i) => i !== currentIndex);
-      setActiveReports(newActive);
+      if (activeReports.length === 0) return;
+      const currentReport = activeReports[currentIndex];
+      const newUnreviewed = unreviewedReports.filter(r => r.id !== currentReport.id);
+      setUnreviewedReports(newUnreviewed);
       setCurrentIndex(0);
       setExpandedSections([0]);
       setSelectedForeman(mockForemen[0]);
       window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  if (activeReports.length === 0) {
-    return (
-      <div className="flex-1 lg:pl-60 min-h-screen bg-surface flex items-center justify-center transition-all">
-         <div className="text-center apple-card p-10 max-w-sm mx-auto">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
-               <CheckCircle2 size={32} className="text-primary" />
-            </div>
-            <h2 className="text-[20px] font-semibold text-on-surface tracking-tight mb-2">All Caught Up</h2>
-            <p className="text-[13px] text-on-surface-variant">There are no more reports pending your review for today.</p>
-         </div>
-      </div>
-    );
-  }
 
   // Calculate metrics for Export Summary
   const reportMetrics = useMemo(() => {
@@ -101,6 +109,42 @@ export default function Dashboard() {
            </div>
         </div>
 
+        {/* Filter & Search */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-surface-lowest p-2 rounded-2xl border border-on-surface/[0.04]">
+           <div className="flex gap-1 overflow-x-auto no-scrollbar">
+              {['All', 'Today', 'This Week', 'This Month'].map(f => (
+                 <button 
+                   key={f} 
+                   onClick={() => { setFilterDate(f); setCurrentIndex(0); }}
+                   className={`px-4 py-2 rounded-xl text-[13px] whitespace-nowrap transition-all ${filterDate === f ? 'bg-surface shadow-[0_2px_8px_rgba(0,0,0,0.04)] text-on-surface font-medium border border-on-surface/[0.04]' : 'text-on-surface-variant hover:text-on-surface'}`}
+                 >
+                   {f}
+                 </button>
+              ))}
+           </div>
+           <div className="relative group flex-1 md:max-w-xs">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50" size={14} />
+              <input 
+                 value={searchQuery}
+                 onChange={(e) => { setSearchQuery(e.target.value); setCurrentIndex(0); }}
+                 placeholder="Search reports..." 
+                 className="w-full pl-8 pr-4 py-2 rounded-xl bg-surface border border-on-surface/[0.06] text-[13px] outline-none focus:ring-2 ring-primary/20 placeholder:text-on-surface-variant/40 transition-all"
+              />
+           </div>
+        </div>
+
+        {activeReports.length === 0 ? (
+           <div className="flex-1 flex items-center justify-center pt-20">
+             <div className="text-center apple-card p-10 max-w-sm mx-auto w-full">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
+                   <CheckCircle2 size={32} className="text-primary" />
+                </div>
+                <h2 className="text-[20px] font-semibold text-on-surface tracking-tight mb-2">No Reports Found</h2>
+                <p className="text-[13px] text-on-surface-variant leading-relaxed">No reports match your current filters. Try adjusting your search query or date range.</p>
+             </div>
+           </div>
+        ) : (
+        <div className="space-y-8 animate-in fade-in duration-500 slide-in-from-bottom-5">
         {/* Carousel Control Wrapper */}
         <div className="relative group">
            
@@ -327,22 +371,27 @@ export default function Dashboard() {
            </div>
         </div>
 
+        </div>
+        )}
+
       </main>
 
-      <ExportIntelligenceModal 
-        isOpen={isExportModalOpen}
-        onClose={() => setIsExportModalOpen(false)}
-        reportData={{
-          id: report.id,
-          project: report.project,
-          subject: report.subject,
-          date: report.date,
-          score: report.score,
-          inspector: report.inspector,
-          findingsCount: reportMetrics.totalFindings,
-          violationsCount: reportMetrics.violations
-        }}
-      />
+      {report && (
+        <ExportIntelligenceModal 
+          isOpen={isExportModalOpen}
+          onClose={() => setIsExportModalOpen(false)}
+          reportData={{
+            id: report.id,
+            project: report.project,
+            subject: report.subject,
+            date: report.date,
+            score: report.score,
+            inspector: report.inspector,
+            findingsCount: reportMetrics.totalFindings,
+            violationsCount: reportMetrics.violations
+          }}
+        />
+      )}
     </div>
   );
 }

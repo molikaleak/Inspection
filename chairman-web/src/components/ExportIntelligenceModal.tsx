@@ -18,8 +18,8 @@ interface ExportIntelligenceModalProps {
 }
 
 export default function ExportIntelligenceModal({ isOpen, onClose, reportData }: ExportIntelligenceModalProps) {
-  const [format, setFormat] = useState<'pdf' | 'excel' | 'slides'>('pdf');
-  const [scope, setScope] = useState<'full' | 'summary' | 'violations'>('full');
+  const [format, setFormat] = useState<'pdf' | 'excel' | 'slides'>('excel');
+  const [scope, setScope] = useState<'all' | 'single'>('single');
   const [enrichments, setEnrichments] = useState<string[]>(['visuals', 'merit']);
 
   if (!isOpen) return null;
@@ -89,22 +89,16 @@ export default function ExportIntelligenceModal({ isOpen, onClose, reportData }:
             <h3 className="text-[13px] text-on-surface-variant">Scope</h3>
             <div className="space-y-2">
               <ScopeOption 
-                label="Full Report" 
-                desc="All checklist items, photos, and metadata."
-                active={scope === 'full'}
-                onClick={() => setScope('full')}
+                label={`Selected Foreman Only`} 
+                desc={`Export pure Excel List for only the currently selected foreman.`}
+                active={scope === 'single'}
+                onClick={() => setScope('single')}
               />
               <ScopeOption 
-                label="Executive Summary" 
-                desc="Key metrics and high-level findings."
-                active={scope === 'summary'}
-                onClick={() => setScope('summary')}
-              />
-              <ScopeOption 
-                label="Violations Only" 
-                desc="Failed items and action requirements."
-                active={scope === 'violations'}
-                onClick={() => setScope('violations')}
+                label={`All Foremen for ${reportData.inspector}`} 
+                desc="Export multiple Excel copies for everyone managed by this inspector in this session."
+                active={scope === 'all'}
+                onClick={() => setScope('all')}
               />
             </div>
           </div>
@@ -195,10 +189,12 @@ export default function ExportIntelligenceModal({ isOpen, onClose, reportData }:
             >
               <Eye size={14} /> Preview
             </Link>
-            
-            <button className="w-full group relative flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-white font-medium text-[13px] overflow-hidden transition-all hover:opacity-90 active:scale-[0.98]">
-              <Download size={16} /> Export
-            </button>
+            <Link 
+              to={`/export-excel/${reportData.id}?scope=${scope}&foremanId=${reportData.foremanId || ''}`}
+              className="w-full group relative flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-white font-medium text-[13px] overflow-hidden transition-all hover:opacity-90 active:scale-[0.98]"
+            >
+              <Download size={16} /> Print / Export List
+            </Link>
           </div>
         </div>
       </div>

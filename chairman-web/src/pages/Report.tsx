@@ -275,6 +275,7 @@ export default function Report() {
           date: report.date,
           score: report.score,
           inspector: report.inspector,
+          foremanId: selectedForeman.id,
           findingsCount: reportMetrics.totalFindings,
           violationsCount: reportMetrics.violations
         }}

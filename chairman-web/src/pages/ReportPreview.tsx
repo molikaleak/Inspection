@@ -1,11 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { mockReports } from '../data/mockData';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { mockReports, mockForemen, mockChecklist, mockInspectorsData } from '../data/mockData';
 import { ChevronLeft, Printer, Download } from 'lucide-react';
-import ReportDocument from '../components/ReportDocument';
+import ExcelFormView from '../components/ExcelFormView';
 
 export default function ReportPreview() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const report = mockReports.find(r => r.id === id) || mockReports[0];
+  const foremanId = searchParams.get('foremanId');
+  const foreman = mockForemen.find(f => f.id === foremanId) || mockForemen[0];
   
   const handlePrint = () => {
     window.print();
@@ -38,8 +41,8 @@ export default function ReportPreview() {
       </div>
 
       {/* Report Document Canvas */}
-      <main className="max-w-[210mm] mx-auto mt-8 shadow-card print:shadow-none print:mt-0 print:p-0 rounded-2xl overflow-hidden print:rounded-none">
-        <ReportDocument report={report as any} />
+      <main className="max-w-[210mm] mx-auto mt-8 shadow-card print:shadow-none print:mt-0 print:p-0 overflow-hidden print:rounded-none">
+        <ExcelFormView report={report} foreman={foreman} checklist={mockChecklist} inspectorImage={mockInspectorsData[report.inspector]?.avatar} />
       </main>
     </div>
   );

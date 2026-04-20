@@ -11,6 +11,7 @@ import Archive from './pages/Archive';
 import Config from './pages/Config';
 import Appointments from './pages/Appointments';
 import Tracker from './pages/Tracker';
+import PrintExcelForm from './pages/PrintExcelForm';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { useLocation } from 'react-router-dom';
 
@@ -46,6 +47,7 @@ function AppContent() {
         <Route path="/appointments" element={<Appointments />} />
         <Route path="/report/:id" element={<Report />} />
         <Route path="/report/:id/preview" element={<ReportPreview />} />
+        <Route path="/export-excel/:id" element={<PrintExcelForm />} />
         <Route path="/reports/print-all" element={<ReportsPrintAll />} />
         {/* <Route path="/config" element={<Config />} /> */}
         </Routes>
